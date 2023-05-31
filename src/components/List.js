@@ -1,16 +1,35 @@
 // import { useState } from 'react';
+import { useState } from "react";
+import Modal from "./common/Modal";
 
 const List = (props) => {
-    const { list } = props;
-    const { content } = props;
-    const { selectIndex } = props;
-    const { deleteIndex } = props;
+    const { list, content, selectIndex, deleteIndex } = props;
+    const [visible, setVisible] = useState(false)
+    const [selectedIndex, setSelectedIndex] = useState(-1)
+
     const onDelete = (index) => {
       deleteIndex(index);
     };
     const onCheck = (index) => {
       selectIndex(index);
     };
+
+    const saveContent = () => {
+      
+    }
+
+    const closeModal = (event) => {
+      event.preventDefault()
+      setVisible(false)
+    }
+
+    const showModal = (idx) => {
+      setSelectedIndex(idx)
+      setVisible(true)
+    }
+
+    console.log(list[selectedIndex])
+
     return (
       <div>
         {list.map((todo, index) => (
@@ -58,9 +77,38 @@ const List = (props) => {
                   onClick={() => onDelete(index)}
                 />
               </div>
+              <div style={{ marginLeft: "3rem" }}>
+                <input
+                  id="DeleteItem"
+                  type="button"
+                  value="Edit"
+                  onClick={() => showModal(index)}
+                />
+              </div>
             </div>
           </div>
         ))}
+        <Modal visible={visible}>
+          <div style={{background: 'white', padding: 20, minWidth: 600, color: 'black'}}>
+            <h1 style={{color: 'black'}}>Change ToDo Content</h1>
+
+            <form>
+              <div>
+                <p>Title</p>
+                <input type="text" name="title" value={selectedIndex>-1?list[selectedIndex].title:""} />
+              </div>
+              <div>
+                <p>Content</p>
+                <input type="text" name="content" value="" />
+              </div>
+
+              <div style={{marginTop: 20}}>
+                <button onClick={saveContent} style={{marginRight: 20}}>Save</button>
+                <button onClick={closeModal}>Close</button>
+              </div>
+            </form>
+          </div>
+        </Modal>
       </div>
     );
   };

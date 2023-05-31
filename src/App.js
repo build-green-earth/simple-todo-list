@@ -1,8 +1,10 @@
 // import { getOptions } from "loader-utils";
 import Form from "./components/Form";
 import List from "./components/List";
-import AlertDialog from "./components/AlertDialog";
 import { useState } from "react";
+
+// Delete & Select using map & filter
+// Combine Content array & list
 
 export default function App() {
   const [list, setList] = useState([]);
@@ -40,7 +42,6 @@ export default function App() {
         selectIndex={selectIndex}
         deleteIndex={deleteIndex}
       />
-      <AlertDialog/>
     </div>
   );
 }
